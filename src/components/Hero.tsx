@@ -4,9 +4,8 @@ import { motion } from 'framer-motion'
 
 // ─── Update these values ───────────────────────────────────────────────────
 const NAME = 'Hiral Patel'
-const HEADLINE = 'Building AI-powered products and scaling data-driven operations'
-const SUBHEADLINE =
-  'Experience across Microsoft, New York Times, and Salesforce building systems that drive efficiency, reduce cost, and improve user experience.'
+const HEADLINE =
+  'Building AI-powered products and scaling data-driven operations — with experience across Microsoft, New York Times, and Salesforce.'
 const AVAILABLE = true // Set to false to hide the availability badge
 // ──────────────────────────────────────────────────────────────────────────
 
@@ -51,37 +50,26 @@ export default function Hero() {
           </motion.div>
         )}
 
-        {/* Name label */}
-        <motion.p
+        {/* Name */}
+        <motion.h1
           custom={0.06}
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="text-sm font-semibold text-indigo-500 tracking-widest uppercase mb-6 select-none"
+          className="text-[clamp(3rem,9vw,6.5rem)] font-bold tracking-tighter text-zinc-900 leading-[0.95] mb-8"
         >
           {NAME}
-        </motion.p>
-
-        {/* Headline */}
-        <motion.h1
-          custom={0.14}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          className="text-[clamp(2.1rem,5.5vw,4.25rem)] font-bold tracking-tight text-zinc-900 leading-[1.1] mb-7 max-w-3xl mx-auto"
-        >
-          {HEADLINE}
         </motion.h1>
 
-        {/* Subheadline */}
+        {/* Headline */}
         <motion.p
-          custom={0.26}
+          custom={0.2}
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="max-w-xl mx-auto text-base sm:text-lg text-zinc-500 leading-relaxed mb-12"
+          className="max-w-2xl mx-auto text-base sm:text-xl text-zinc-500 leading-relaxed mb-12"
         >
-          {SUBHEADLINE}
+          {HEADLINE}
         </motion.p>
 
         {/* CTAs */}
