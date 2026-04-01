@@ -10,28 +10,28 @@ const statusConfig: Record<
   { dot: string; text: string; bg: string; border: string }
 > = {
   Live: {
-    dot: 'bg-emerald-400',
-    text: 'text-emerald-300',
-    bg: 'bg-emerald-950/60',
-    border: 'border-emerald-800/50',
+    dot: 'bg-emerald-500',
+    text: 'text-emerald-700',
+    bg: 'bg-emerald-50',
+    border: 'border-emerald-200',
   },
   'In Progress': {
-    dot: 'bg-amber-400',
-    text: 'text-amber-300',
-    bg: 'bg-amber-950/60',
-    border: 'border-amber-800/50',
+    dot: 'bg-amber-500',
+    text: 'text-amber-700',
+    bg: 'bg-amber-50',
+    border: 'border-amber-200',
   },
   'Case Study': {
-    dot: 'bg-blue-400',
-    text: 'text-blue-300',
-    bg: 'bg-blue-950/60',
-    border: 'border-blue-800/50',
+    dot: 'bg-blue-500',
+    text: 'text-blue-700',
+    bg: 'bg-blue-50',
+    border: 'border-blue-200',
   },
   Archived: {
-    dot: 'bg-zinc-500',
-    text: 'text-zinc-400',
-    bg: 'bg-zinc-800/60',
-    border: 'border-zinc-700/50',
+    dot: 'bg-zinc-400',
+    text: 'text-zinc-600',
+    bg: 'bg-zinc-100',
+    border: 'border-zinc-300',
   },
 }
 

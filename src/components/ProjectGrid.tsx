@@ -43,7 +43,7 @@ export default function ProjectGrid({ projects, allTags }: ProjectGridProps) {
   const totalVisible = filteredFeatured.length + filteredRegular.length
 
   return (
-    <section id="projects" className="py-28 sm:py-36 bg-zinc-950">
+    <section id="projects" className="py-28 sm:py-36 bg-zinc-50">
       <div className="max-w-6xl mx-auto px-6">
         {/* Section header */}
         <motion.div
@@ -53,10 +53,10 @@ export default function ProjectGrid({ projects, allTags }: ProjectGridProps) {
           transition={{ duration: 0.55, ease: [0.21, 0.47, 0.32, 0.98] }}
           className="mb-12"
         >
-          <p className="text-xs font-semibold tracking-widest text-zinc-600 uppercase mb-3">
+          <p className="text-xs font-semibold tracking-widest text-zinc-400 uppercase mb-3">
             Work
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-50">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">
             Selected Projects
           </h2>
         </motion.div>
@@ -74,8 +74,8 @@ export default function ProjectGrid({ projects, allTags }: ProjectGridProps) {
               onClick={() => setActiveTag(null)}
               className={`px-3.5 py-1.5 text-xs font-medium rounded-lg border transition-all duration-200 ${
                 activeTag === null
-                  ? 'bg-zinc-50 text-zinc-950 border-transparent'
-                  : 'text-zinc-400 border-white/[0.08] hover:border-white/[0.15] hover:text-zinc-200 bg-transparent'
+                  ? 'bg-zinc-900 text-zinc-50 border-transparent'
+                  : 'text-zinc-500 border-black/[0.08] hover:border-black/[0.15] hover:text-zinc-800 bg-transparent'
               }`}
             >
               All
@@ -86,8 +86,8 @@ export default function ProjectGrid({ projects, allTags }: ProjectGridProps) {
                 onClick={() => setActiveTag(activeTag === tag ? null : tag)}
                 className={`px-3.5 py-1.5 text-xs font-medium rounded-lg border transition-all duration-200 ${
                   activeTag === tag
-                    ? 'bg-zinc-50 text-zinc-950 border-transparent'
-                    : 'text-zinc-400 border-white/[0.08] hover:border-white/[0.15] hover:text-zinc-200 bg-transparent'
+                    ? 'bg-zinc-900 text-zinc-50 border-transparent'
+                    : 'text-zinc-500 border-black/[0.08] hover:border-black/[0.15] hover:text-zinc-800 bg-transparent'
                 }`}
               >
                 {tag}
@@ -107,9 +107,9 @@ export default function ProjectGrid({ projects, allTags }: ProjectGridProps) {
               transition={{ duration: 0.35 }}
               className="py-24 text-center"
             >
-              <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-white/[0.06] flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 rounded-xl bg-zinc-100 border border-black/[0.06] flex items-center justify-center mx-auto mb-4">
                 <svg
-                  className="w-5 h-5 text-zinc-600"
+                  className="w-5 h-5 text-zinc-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -124,11 +124,11 @@ export default function ProjectGrid({ projects, allTags }: ProjectGridProps) {
               </div>
               <p className="text-sm text-zinc-500">
                 No projects tagged with{' '}
-                <span className="text-zinc-300">{activeTag}</span>
+                <span className="text-zinc-700">{activeTag}</span>
               </p>
               <button
                 onClick={() => setActiveTag(null)}
-                className="mt-3 text-xs text-zinc-600 hover:text-zinc-400 transition-colors underline underline-offset-4"
+                className="mt-3 text-xs text-zinc-400 hover:text-zinc-600 transition-colors underline underline-offset-4"
               >
                 Clear filter
               </button>
@@ -174,7 +174,7 @@ export default function ProjectGrid({ projects, allTags }: ProjectGridProps) {
         {/* Zero-project initial empty state (before any projects are added) */}
         {projects.length === 0 && (
           <div className="py-32 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-zinc-900 border border-white/[0.06] flex items-center justify-center mx-auto mb-6">
+            <div className="w-16 h-16 rounded-2xl bg-zinc-100 border border-black/[0.06] flex items-center justify-center mx-auto mb-6">
               <svg
                 className="w-7 h-7 text-zinc-700"
                 fill="none"
@@ -189,7 +189,7 @@ export default function ProjectGrid({ projects, allTags }: ProjectGridProps) {
                 />
               </svg>
             </div>
-            <h3 className="text-lg font-semibold text-zinc-300 mb-2">
+            <h3 className="text-lg font-semibold text-zinc-700 mb-2">
               Projects coming soon
             </h3>
             <p className="text-sm text-zinc-600 max-w-xs mx-auto">

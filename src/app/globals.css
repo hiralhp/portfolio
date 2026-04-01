@@ -10,12 +10,12 @@
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
-  background-color: #09090b;
-  color: #f4f4f5;
+  background-color: #fafaf9;
+  color: #18181b;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -29,24 +29,24 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #3f3f46;
+  background: #d4d4d8;
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #52525b;
+  background: #a1a1aa;
 }
 
 /* ─── Selection ─────────────────────────────────────────────────────────── */
 
 ::selection {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fafafa;
+  background: rgba(0, 0, 0, 0.08);
+  color: #18181b;
 }
 
 /* ─── Focus ─────────────────────────────────────────────────────────────── */
 
 :focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.3);
+  outline: 2px solid rgba(0, 0, 0, 0.25);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -54,20 +54,20 @@ body {
 /* ─── Prose overrides for project detail pages ──────────────────────────── */
 
 .prose-portfolio {
-  --tw-prose-body: #a1a1aa;
-  --tw-prose-headings: #f4f4f5;
-  --tw-prose-lead: #a1a1aa;
-  --tw-prose-links: #e4e4e7;
-  --tw-prose-bold: #f4f4f5;
+  --tw-prose-body: #52525b;
+  --tw-prose-headings: #18181b;
+  --tw-prose-lead: #71717a;
+  --tw-prose-links: #3f3f46;
+  --tw-prose-bold: #18181b;
   --tw-prose-counters: #71717a;
-  --tw-prose-bullets: #52525b;
-  --tw-prose-hr: #27272a;
-  --tw-prose-quotes: #e4e4e7;
-  --tw-prose-quote-borders: #3f3f46;
+  --tw-prose-bullets: #a1a1aa;
+  --tw-prose-hr: #e4e4e7;
+  --tw-prose-quotes: #3f3f46;
+  --tw-prose-quote-borders: #d4d4d8;
   --tw-prose-captions: #71717a;
-  --tw-prose-code: #f4f4f5;
-  --tw-prose-pre-code: #e4e4e7;
-  --tw-prose-pre-bg: #18181b;
-  --tw-prose-th-borders: #3f3f46;
-  --tw-prose-td-borders: #27272a;
+  --tw-prose-code: #18181b;
+  --tw-prose-pre-code: #27272a;
+  --tw-prose-pre-bg: #f4f4f5;
+  --tw-prose-th-borders: #d4d4d8;
+  --tw-prose-td-borders: #e4e4e7;
 }

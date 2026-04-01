@@ -16,18 +16,18 @@ const geistMono = Geist_Mono({
 
 // ─── Update these ──────────────────────────────────────────────────────────
 export const metadata: Metadata = {
-  title: 'Your Name — Portfolio',
+  title: 'Hiral Patel — Portfolio',
   description:
     'Software engineer building thoughtful digital products. Focused on performance, craft, and the details that matter.',
   openGraph: {
-    title: 'Your Name — Portfolio',
+    title: 'Hiral Patel — Portfolio',
     description:
       'Software engineer building thoughtful digital products. Focused on performance, craft, and the details that matter.',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Your Name — Portfolio',
+    title: 'Hiral Patel — Portfolio',
     description:
       'Software engineer building thoughtful digital products.',
   },
@@ -44,7 +44,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
-      <body className="bg-zinc-950 text-zinc-100 min-h-screen">{children}</body>
+      <body className="bg-white text-zinc-900 min-h-screen">{children}</body>
     </html>
   )
 }

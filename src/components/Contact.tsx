@@ -3,10 +3,10 @@
 import { motion } from 'framer-motion'
 
 // ─── Update these links ────────────────────────────────────────────────────
-const EMAIL = 'your@email.com'
-const GITHUB = 'https://github.com/yourusername'
-const LINKEDIN = 'https://linkedin.com/in/yourusername'
-const TWITTER = 'https://twitter.com/yourusername' // or set to '' to hide
+const EMAIL = 'patelh319@gmail.com'
+const GITHUB = 'https://github.com/hiralhp'
+const LINKEDIN = 'https://linkedin.com/in/hiralhp'
+const TWITTER: string = '' // set to '' to hide
 // ──────────────────────────────────────────────────────────────────────────
 
 const links = [
@@ -69,7 +69,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="py-28 sm:py-36 bg-zinc-950 border-t border-white/[0.04]"
+      className="py-28 sm:py-36 bg-white border-t border-black/[0.04]"
     >
       <div className="max-w-6xl mx-auto px-6">
         <div className="max-w-2xl">
@@ -79,13 +79,13 @@ export default function Contact() {
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.55, ease: [0.21, 0.47, 0.32, 0.98] }}
           >
-            <p className="text-xs font-semibold tracking-widest text-zinc-600 uppercase mb-3">
+            <p className="text-xs font-semibold tracking-widest text-zinc-400 uppercase mb-3">
               Contact
             </p>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-50 mb-4 leading-tight">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 mb-4 leading-tight">
               Let&apos;s work together
             </h2>
-            <p className="text-base text-zinc-400 leading-relaxed mb-10">
+            <p className="text-base text-zinc-600 leading-relaxed mb-10">
               Open to interesting projects, collaborations, and conversations.
               Whether you have a concrete idea or just want to talk — reach out.
             </p>
@@ -104,19 +104,19 @@ export default function Contact() {
                 href={href}
                 target={external ? '_blank' : undefined}
                 rel={external ? 'noopener noreferrer' : undefined}
-                className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-zinc-900/50 hover:bg-zinc-900 hover:border-white/[0.1] transition-all duration-200 group"
+                className="flex items-center gap-4 p-4 rounded-xl border border-black/[0.06] bg-zinc-50 hover:bg-zinc-100 hover:border-black/[0.1] transition-all duration-200 group"
               >
-                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-zinc-800 text-zinc-400 group-hover:text-zinc-200 transition-colors shrink-0">
+                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-zinc-200 text-zinc-600 group-hover:text-zinc-900 transition-colors shrink-0">
                   {icon}
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs font-medium text-zinc-600 uppercase tracking-wider mb-0.5">
+                  <p className="text-xs font-medium text-zinc-400 uppercase tracking-wider mb-0.5">
                     {label}
                   </p>
-                  <p className="text-sm text-zinc-300 truncate">{value}</p>
+                  <p className="text-sm text-zinc-700 truncate">{value}</p>
                 </div>
                 <svg
-                  className="w-4 h-4 text-zinc-700 group-hover:text-zinc-400 ml-auto shrink-0 transition-colors"
+                  className="w-4 h-4 text-zinc-300 group-hover:text-zinc-600 ml-auto shrink-0 transition-colors"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

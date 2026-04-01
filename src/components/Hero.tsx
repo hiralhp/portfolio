@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 
 // ─── Update these values ───────────────────────────────────────────────────
-const NAME = 'Your Name'
+const NAME = 'Hiral Patel'
 const ROLE = 'Software Engineer'
 const TAGLINE =
   'I build thoughtful digital products — clean interfaces, scalable systems, and the small details that make something feel right.'
@@ -23,12 +23,12 @@ const fadeUp = {
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-zinc-950">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
       {/* Subtle background glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-white/[0.018] rounded-full blur-3xl" />
-        <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-indigo-950/30 rounded-full blur-3xl" />
-        <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-violet-950/20 rounded-full blur-3xl" />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-black/[0.018] rounded-full blur-3xl" />
+        <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-indigo-100/60 rounded-full blur-3xl" />
+        <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-violet-100/50 rounded-full blur-3xl" />
       </div>
 
       {/* Content */}
@@ -40,7 +40,7 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-10 rounded-full border border-white/10 bg-white/[0.04] text-xs text-zinc-400 select-none"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-10 rounded-full border border-black/10 bg-black/[0.04] text-xs text-zinc-600 select-none"
           >
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
@@ -56,7 +56,7 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="text-[clamp(3rem,10vw,7rem)] font-bold tracking-tighter text-zinc-50 leading-[0.95] mb-7"
+          className="text-[clamp(3rem,10vw,7rem)] font-bold tracking-tighter text-zinc-900 leading-[0.95] mb-7"
         >
           {NAME}
         </motion.h1>
@@ -67,7 +67,7 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="text-lg sm:text-xl text-zinc-400 font-light tracking-wide mb-5"
+          className="text-lg sm:text-xl text-zinc-600 font-light tracking-wide mb-5"
         >
           {ROLE}
         </motion.p>
@@ -93,7 +93,7 @@ export default function Hero() {
         >
           <a
             href="#projects"
-            className="inline-flex items-center gap-2 px-6 py-2.5 bg-zinc-50 text-zinc-950 text-sm font-semibold rounded-lg hover:bg-white transition-colors duration-200"
+            className="inline-flex items-center gap-2 px-6 py-2.5 bg-zinc-900 text-zinc-50 text-sm font-semibold rounded-lg hover:bg-black transition-colors duration-200"
           >
             View Projects
             <svg
@@ -112,7 +112,7 @@ export default function Hero() {
           </a>
           <a
             href="#contact"
-            className="inline-flex items-center px-6 py-2.5 bg-transparent text-zinc-300 text-sm font-medium rounded-lg border border-white/10 hover:border-white/20 hover:text-zinc-100 hover:bg-white/[0.04] transition-all duration-200"
+            className="inline-flex items-center px-6 py-2.5 bg-transparent text-zinc-600 text-sm font-medium rounded-lg border border-black/10 hover:border-black/20 hover:text-zinc-900 hover:bg-black/[0.04] transition-all duration-200"
           >
             Get in Touch
           </a>
@@ -126,7 +126,7 @@ export default function Hero() {
         transition={{ delay: 1.4, duration: 1 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
       >
-        <div className="w-px h-10 bg-gradient-to-b from-transparent via-zinc-600 to-transparent" />
+        <div className="w-px h-10 bg-gradient-to-b from-transparent via-zinc-400 to-transparent" />
       </motion.div>
     </section>
   )

@@ -22,7 +22,7 @@ export default function Navigation() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'bg-zinc-950/75 backdrop-blur-xl border-b border-white/[0.06]'
+          ? 'bg-white/90 backdrop-blur-xl border-b border-black/[0.06]'
           : 'bg-transparent'
       }`}
     >
@@ -30,9 +30,9 @@ export default function Navigation() {
         {/* Logo / Name — update this */}
         <Link
           href="/"
-          className="text-sm font-semibold text-zinc-100 hover:text-white transition-colors tracking-tight"
+          className="text-sm font-semibold text-zinc-900 hover:text-black transition-colors tracking-tight"
         >
-          Your Name
+          Hiral Patel
         </Link>
 
         {/* Navigation links */}
@@ -41,7 +41,7 @@ export default function Navigation() {
             <a
               key={href}
               href={href}
-              className="px-3 py-1.5 text-sm text-zinc-400 hover:text-zinc-100 rounded-md hover:bg-white/[0.05] transition-all duration-200"
+              className="px-3 py-1.5 text-sm text-zinc-500 hover:text-zinc-900 rounded-md hover:bg-black/[0.05] transition-all duration-200"
             >
               {label}
             </a>
@@ -54,7 +54,7 @@ export default function Navigation() {
             <a
               key={href}
               href={href}
-              className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
+              className="text-xs text-zinc-500 hover:text-zinc-700 transition-colors"
             >
               {label}
             </a>

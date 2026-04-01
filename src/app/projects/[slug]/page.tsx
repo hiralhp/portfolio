@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = getProjectBySlug(slug)
   if (!project) return {}
   return {
-    title: `${project.title} — Your Name`,
+    title: `${project.title} — Hiral Patel`,
     description: project.shortDescription,
   }
 }
@@ -39,7 +39,7 @@ export default async function ProjectPage({ params }: Props) {
   return (
     <>
       <Navigation />
-      <main className="min-h-screen bg-zinc-950 pt-16">
+      <main className="min-h-screen bg-white pt-16">
         {/* Hero image / gradient */}
         <div className="relative w-full aspect-[16/7] sm:aspect-[16/6] overflow-hidden">
           {hasImage ? (
@@ -71,7 +71,7 @@ export default async function ProjectPage({ params }: Props) {
             </div>
           )}
           {/* Bottom fade */}
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white to-transparent" />
         </div>
 
         {/* Content */}
@@ -79,7 +79,7 @@ export default async function ProjectPage({ params }: Props) {
           {/* Back link */}
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-2 text-xs text-zinc-500 hover:text-zinc-300 transition-colors mb-8 group"
+            className="inline-flex items-center gap-2 text-xs text-zinc-500 hover:text-zinc-700 transition-colors mb-8 group"
           >
             <svg
               className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform"
@@ -102,26 +102,26 @@ export default async function ProjectPage({ params }: Props) {
             <div className="flex flex-wrap items-center gap-3 mb-4">
               {project.status && <StatusBadge status={project.status} />}
               {project.date && (
-                <span className="text-xs text-zinc-600 font-medium">{project.date}</span>
+                <span className="text-xs text-zinc-400 font-medium">{project.date}</span>
               )}
             </div>
 
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-50 mb-4 leading-tight">
+            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-900 mb-4 leading-tight">
               {project.title}
             </h1>
 
-            <p className="text-lg text-zinc-400 leading-relaxed">
+            <p className="text-lg text-zinc-600 leading-relaxed">
               {project.shortDescription}
             </p>
           </div>
 
           {/* Tags */}
           {project.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-10 pb-10 border-b border-white/[0.06]">
+            <div className="flex flex-wrap gap-2 mb-10 pb-10 border-b border-black/[0.06]">
               {project.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1.5 text-xs font-medium text-zinc-400 border border-white/[0.08] rounded-lg bg-white/[0.03]"
+                  className="px-3 py-1.5 text-xs font-medium text-zinc-600 border border-black/[0.08] rounded-lg bg-black/[0.03]"
                 >
                   {tag}
                 </span>
@@ -133,7 +133,7 @@ export default async function ProjectPage({ params }: Props) {
           {paragraphs.length > 0 && (
             <div className="space-y-5 mb-12">
               {paragraphs.map((para, i) => (
-                <p key={i} className="text-base text-zinc-400 leading-[1.8]">
+                <p key={i} className="text-base text-zinc-600 leading-[1.8]">
                   {para}
                 </p>
               ))}
@@ -148,7 +148,7 @@ export default async function ProjectPage({ params }: Props) {
                   href={project.links.primary.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-50 text-zinc-950 text-sm font-semibold rounded-xl hover:bg-white transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-900 text-zinc-50 text-sm font-semibold rounded-xl hover:bg-black transition-colors"
                 >
                   {project.links.primary.label}
                   <svg
@@ -171,7 +171,7 @@ export default async function ProjectPage({ params }: Props) {
                   href={project.links.secondary.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-zinc-300 border border-white/[0.1] hover:border-white/[0.2] hover:text-zinc-100 rounded-xl hover:bg-white/[0.04] transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-zinc-600 border border-black/[0.1] hover:border-black/[0.2] hover:text-zinc-900 rounded-xl hover:bg-black/[0.04] transition-all"
                 >
                   {project.links.secondary.label}
                 </a>
