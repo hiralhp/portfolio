@@ -5,17 +5,17 @@ import { motion } from 'framer-motion'
 // ─── Update these values ───────────────────────────────────────────────────
 const NAME = 'Hiral Patel'
 const BIO_LINES = [
-  "I'm a software engineer with a focus on building products that are both technically strong and a pleasure to use. I care about the intersection of engineering and design — the details that make software feel right.",
-  'Currently building [Your Current Project or Role]. Previously [Previous Experience]. I like working across the stack but spend most of my time in React, TypeScript, and Node.js.',
-  "Outside of code, I'm interested in [Your Interests]. I believe good software comes from curiosity, craft, and genuine care for the people using it.",
+  "I'm a product and operations professional with experience across enterprise software, media, and CRM — including Microsoft, The New York Times, and Salesforce. I specialize in bridging the gap between technical systems and business outcomes, translating complexity into decisions that drive impact.",
+  'My work sits at the intersection of product, data, and strategy. I\'ve led cross-functional initiatives, built AI-powered workflows, and designed operational systems that reduce friction while improving both user and business outcomes.',
+  "I'm energized by roles where technical fluency and business judgment both matter — whether that's defining a product roadmap, scaling an operations function, or accelerating the adoption of AI-native tooling.",
 ]
 // ──────────────────────────────────────────────────────────────────────────
 
 const highlights = [
-  { label: 'Focus', value: 'Full-Stack Development' },
-  { label: 'Currently', value: '[Your Status]' },
+  { label: 'Focus', value: 'Product & Strategy' },
+  { label: 'Companies', value: 'Microsoft · NYT · Salesforce' },
   { label: 'Based in', value: '[Your Location]' },
-  { label: 'Open to', value: 'New Opportunities' },
+  { label: 'Open to', value: 'PM / Strategy & Ops / AI Roles' },
 ]
 
 export default function About() {
@@ -30,7 +30,7 @@ export default function About() {
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.55, ease: [0.21, 0.47, 0.32, 0.98] }}
           >
-            <p className="text-xs font-semibold tracking-widest text-zinc-400 uppercase mb-3">
+            <p className="text-xs font-semibold tracking-widest text-indigo-500 uppercase mb-3">
               About
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 mb-10 leading-tight">
@@ -67,19 +67,19 @@ export default function About() {
 
             {/* Skills row */}
             <div className="pt-4">
-              <p className="text-xs font-semibold tracking-widest text-zinc-400 uppercase mb-4">
-                Technologies
+              <p className="text-xs font-semibold tracking-widest text-indigo-500 uppercase mb-4">
+                Tools & Technologies
               </p>
               <div className="flex flex-wrap gap-2">
                 {[
-                  'TypeScript',
-                  'React',
-                  'Next.js',
-                  'Node.js',
-                  'PostgreSQL',
-                  'Tailwind CSS',
+                  'SQL',
+                  'Python',
+                  'Salesforce',
                   'Figma',
-                  'Docker',
+                  'TypeScript',
+                  'dbt / Looker',
+                  'JIRA / Linear',
+                  'AI/ML Workflows',
                 ].map((tech) => (
                   <span
                     key={tech}

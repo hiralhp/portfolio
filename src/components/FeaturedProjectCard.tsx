@@ -70,7 +70,7 @@ export default function FeaturedProjectCard({
       <div className="flex flex-col justify-center p-8 sm:p-10">
         {/* Featured label */}
         <div className="flex items-center gap-2.5 mb-5">
-          <span className="text-xs font-semibold tracking-widest text-zinc-400 uppercase">
+          <span className="text-xs font-semibold tracking-widest text-indigo-500 uppercase">
             Featured
           </span>
           {project.status && <StatusBadge status={project.status} />}

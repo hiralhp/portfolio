@@ -53,7 +53,7 @@ export default function ProjectGrid({ projects, allTags }: ProjectGridProps) {
           transition={{ duration: 0.55, ease: [0.21, 0.47, 0.32, 0.98] }}
           className="mb-12"
         >
-          <p className="text-xs font-semibold tracking-widest text-zinc-400 uppercase mb-3">
+          <p className="text-xs font-semibold tracking-widest text-indigo-500 uppercase mb-3">
             Work
           </p>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">
