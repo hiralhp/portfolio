@@ -14,7 +14,7 @@ const BIO_LINES = [
 const highlights = [
   { label: 'Focus', value: 'Product & Strategy' },
   { label: 'Companies', value: 'Microsoft · NYT · Salesforce' },
-  { label: 'Based in', value: '[Your Location]' },
+  { label: 'Based in', value: 'New York City, NY' },
   { label: 'Open to', value: 'PM / Strategy & Ops / AI Roles' },
 ]
 
