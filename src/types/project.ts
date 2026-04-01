@@ -1,12 +1,15 @@
 // ─── Project Data Schema ─────────────────────────────────────────────────────
-// This is the source of truth for what a project looks like.
-// To add a new project, edit src/data/projects.ts and follow this shape.
 
 export type ProjectStatus = 'Live' | 'In Progress' | 'Case Study' | 'Archived'
 
 export interface ProjectLink {
   label: string
   url: string
+}
+
+export interface GalleryImage {
+  src: string
+  caption?: string
 }
 
 export interface Project {
@@ -18,18 +21,17 @@ export interface Project {
   title: string
   shortDescription: string
 
-  /** Full markdown-ish description shown on the detail page */
+  /** Full description shown on the detail page (paragraphs separated by \n\n) */
   description?: string
 
-  /**
-   * Path to image in /public, e.g. "/images/projects/nexus.jpg"
-   * If omitted, the gradient fallback is used.
-   */
+  /** Path to header image in /public, e.g. "/images/projects/nexus.jpg" */
   image?: string
 
+  /** Additional images shown in a gallery on the detail page */
+  gallery?: GalleryImage[]
+
   /**
-   * Tailwind gradient color classes (from-* via-* to-*).
-   * Used when no image is provided.
+   * Tailwind gradient used when no image is provided.
    * Example: "from-violet-900 via-purple-950 to-indigo-950"
    */
   gradient?: string

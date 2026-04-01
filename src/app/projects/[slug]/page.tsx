@@ -13,7 +13,7 @@ interface Props {
 
 // Pre-generate all project pages at build time
 export async function generateStaticParams() {
-  return projects.map((p) => ({ slug: p.slug }))
+  return projects.filter((p) => p.slug).map((p) => ({ slug: p.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -137,6 +137,33 @@ export default async function ProjectPage({ params }: Props) {
                   {para}
                 </p>
               ))}
+            </div>
+          )}
+
+          {/* Gallery */}
+          {project.gallery && project.gallery.filter(g => g.src).length > 0 && (
+            <div className="mb-12">
+              <p className="text-xs font-semibold tracking-widest text-indigo-500 uppercase mb-5">Gallery</p>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {project.gallery.filter(g => g.src).map((img, i) => (
+                  <figure key={i} className="space-y-2">
+                    <div className="relative aspect-video rounded-xl overflow-hidden bg-zinc-100">
+                      <Image
+                        src={img.src}
+                        alt={img.caption ?? `Gallery image ${i + 1}`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                    </div>
+                    {img.caption && (
+                      <figcaption className="text-xs text-zinc-400 leading-relaxed px-0.5">
+                        {img.caption}
+                      </figcaption>
+                    )}
+                  </figure>
+                ))}
+              </div>
             </div>
           )}
 
