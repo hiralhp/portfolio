@@ -1,7 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import Cropper from 'react-easy-crop'
+import type { Area } from 'react-easy-crop'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -30,14 +32,185 @@ const inputCls =
   'w-full px-3 py-2 text-sm text-zinc-900 border border-black/[0.1] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-black/[0.12] placeholder:text-zinc-300'
 const textareaCls = inputCls + ' resize-none'
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// ─── Canvas crop utility ──────────────────────────────────────────────────────
+
+function createImage(url: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.addEventListener('load', () => resolve(img))
+    img.addEventListener('error', reject)
+    img.setAttribute('crossOrigin', 'anonymous')
+    img.src = url
+  })
+}
+
+async function getCroppedBlob(imageSrc: string, pixelCrop: Area): Promise<Blob> {
+  const image = await createImage(imageSrc)
+  const canvas = document.createElement('canvas')
+  canvas.width = pixelCrop.width
+  canvas.height = pixelCrop.height
+  const ctx = canvas.getContext('2d')!
+  ctx.drawImage(image, pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height, 0, 0, pixelCrop.width, pixelCrop.height)
+  return new Promise((resolve, reject) =>
+    canvas.toBlob(b => b ? resolve(b) : reject(new Error('Canvas empty')), 'image/jpeg', 0.92)
+  )
+}
+
+// ─── Crop modal ───────────────────────────────────────────────────────────────
+
+function CropModal({ src, onConfirm, onCancel }: {
+  src: string
+  onConfirm: (blob: Blob) => void
+  onCancel: () => void
+}) {
+  const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const [zoom, setZoom] = useState(1)
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
+  const [processing, setProcessing] = useState(false)
+
+  const onCropComplete = useCallback((_: Area, pixels: Area) => {
+    setCroppedAreaPixels(pixels)
+  }, [])
+
+  async function handleConfirm() {
+    if (!croppedAreaPixels) return
+    setProcessing(true)
+    try {
+      const blob = await getCroppedBlob(src, croppedAreaPixels)
+      onConfirm(blob)
+    } catch {
+      setProcessing(false)
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4"
+      onClick={onCancel}>
+      <div className="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl"
+        onClick={e => e.stopPropagation()}>
+
+        {/* Header */}
+        <div className="px-5 py-3.5 border-b border-black/[0.06] flex items-center justify-between">
+          <h3 className="text-sm font-semibold text-zinc-900">Crop Image</h3>
+          <span className="text-xs text-zinc-400 bg-zinc-100 px-2 py-0.5 rounded-full">16 : 9</span>
+        </div>
+
+        {/* Cropper */}
+        <div className="relative h-80 bg-zinc-900">
+          <Cropper
+            image={src}
+            crop={crop}
+            zoom={zoom}
+            aspect={16 / 9}
+            onCropChange={setCrop}
+            onZoomChange={setZoom}
+            onCropComplete={onCropComplete}
+          />
+        </div>
+
+        {/* Zoom slider */}
+        <div className="px-5 py-3 border-t border-black/[0.05] flex items-center gap-3">
+          <span className="text-xs text-zinc-400 shrink-0">Zoom</span>
+          <input type="range" min={1} max={3} step={0.01} value={zoom}
+            onChange={e => setZoom(Number(e.target.value))}
+            className="flex-1 accent-indigo-600 h-1" />
+          <span className="text-xs text-zinc-400 w-8 text-right">{zoom.toFixed(1)}×</span>
+        </div>
+
+        {/* Actions */}
+        <div className="px-5 py-4 border-t border-black/[0.06] flex justify-end gap-3">
+          <button type="button" onClick={onCancel}
+            className="px-4 py-2 text-sm text-zinc-500 hover:text-zinc-800 transition-colors">
+            Cancel
+          </button>
+          <button type="button" onClick={handleConfirm} disabled={processing}
+            className="px-5 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50">
+            {processing ? 'Processing…' : 'Apply Crop'}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── Image upload + crop field ────────────────────────────────────────────────
+
+function ImageUpload({ value, onChange, compact = false }: {
+  value: string
+  onChange: (path: string) => void
+  compact?: boolean
+}) {
+  const [uploading, setUploading] = useState(false)
+  const [cropSrc, setCropSrc] = useState<string | null>(null)
+  const [pendingFilename, setPendingFilename] = useState('image.jpg')
+
+  async function uploadBlob(blob: Blob, filename: string) {
+    setUploading(true)
+    try {
+      const fd = new FormData()
+      fd.append('file', new File([blob], filename, { type: 'image/jpeg' }))
+      const res = await fetch('/api/upload', { method: 'POST', body: fd })
+      const data = await res.json()
+      if (data.path) onChange(data.path)
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  function handleFileSelect(file: File) {
+    setPendingFilename(file.name)
+    setCropSrc(URL.createObjectURL(file))
+  }
+
+  function handleCropConfirm(blob: Blob) {
+    if (cropSrc) URL.revokeObjectURL(cropSrc)
+    setCropSrc(null)
+    uploadBlob(blob, pendingFilename)
+  }
+
+  function handleCropCancel() {
+    if (cropSrc) URL.revokeObjectURL(cropSrc)
+    setCropSrc(null)
+  }
+
+  return (
+    <>
+      {cropSrc && (
+        <CropModal src={cropSrc} onConfirm={handleCropConfirm} onCancel={handleCropCancel} />
+      )}
+
+      <div className="space-y-2">
+        {/* Preview (non-compact mode) */}
+        {value && !compact && (
+          <div className="relative aspect-video max-w-xs rounded-xl overflow-hidden bg-zinc-100 group border border-black/[0.06]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={value} alt="" className="object-cover w-full h-full" />
+            <button type="button" onClick={() => onChange('')}
+              className="absolute top-2 right-2 bg-white/90 hover:bg-white w-6 h-6 rounded-full flex items-center justify-center text-zinc-500 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all shadow-sm text-sm font-medium">
+              ×
+            </button>
+          </div>
+        )}
+
+        {/* Input row */}
+        <div className="flex gap-2">
+          <input className={inputCls + ' flex-1'} placeholder="/images/projects/photo.jpg"
+            value={value} onChange={e => onChange(e.target.value)} />
+          <label className={`shrink-0 px-3 py-2 text-xs font-medium border border-black/[0.08] rounded-lg cursor-pointer transition-colors whitespace-nowrap ${uploading ? 'opacity-40 pointer-events-none' : 'text-zinc-600 hover:bg-zinc-50'}`}>
+            {uploading ? 'Uploading…' : 'Upload & Crop'}
+            <input type="file" accept="image/*" className="sr-only" disabled={uploading}
+              onChange={e => { const f = e.target.files?.[0]; if (f) handleFileSelect(f); e.target.value = '' }} />
+          </label>
+        </div>
+      </div>
+    </>
+  )
+}
+
+// ─── Shared field components ──────────────────────────────────────────────────
 
 function Label({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-1.5">
-      {children}
-    </p>
-  )
+  return <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-1.5">{children}</p>
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
@@ -56,53 +229,6 @@ function Toggle({ checked, onChange, label }: { checked: boolean; onChange: (v: 
   )
 }
 
-// ─── Image upload field ───────────────────────────────────────────────────────
-
-function ImageUpload({ value, onChange, compact = false }: {
-  value: string
-  onChange: (path: string) => void
-  compact?: boolean
-}) {
-  const [uploading, setUploading] = useState(false)
-
-  async function handleFile(file: File) {
-    setUploading(true)
-    try {
-      const fd = new FormData()
-      fd.append('file', file)
-      const res = await fetch('/api/upload', { method: 'POST', body: fd })
-      const data = await res.json()
-      if (data.path) onChange(data.path)
-    } finally {
-      setUploading(false)
-    }
-  }
-
-  return (
-    <div className="space-y-2">
-      {value && !compact && (
-        <div className="relative aspect-video max-w-xs rounded-xl overflow-hidden bg-zinc-100 group border border-black/[0.06]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={value} alt="" className="object-cover w-full h-full" />
-          <button type="button" onClick={() => onChange('')}
-            className="absolute top-2 right-2 bg-white/90 hover:bg-white w-6 h-6 rounded-full flex items-center justify-center text-zinc-500 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all shadow-sm text-sm">
-            ×
-          </button>
-        </div>
-      )}
-      <div className="flex gap-2">
-        <input className={inputCls + ' flex-1'} placeholder="/images/projects/photo.jpg"
-          value={value} onChange={e => onChange(e.target.value)} />
-        <label className={`shrink-0 px-3 py-2 text-xs font-medium border border-black/[0.08] rounded-lg cursor-pointer transition-colors ${uploading ? 'opacity-40' : 'text-zinc-600 hover:bg-zinc-50'}`}>
-          {uploading ? '…' : 'Upload'}
-          <input type="file" accept="image/*" className="sr-only" disabled={uploading}
-            onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); e.target.value = '' }} />
-        </label>
-      </div>
-    </div>
-  )
-}
-
 // ─── Project editor card ──────────────────────────────────────────────────────
 
 function ProjectEditor({ project, isOpen, onToggle, onChange, onDelete }: {
@@ -116,7 +242,6 @@ function ProjectEditor({ project, isOpen, onToggle, onChange, onDelete }: {
 
   const setPrimary = (field: keyof ProjectLink, value: string) =>
     onChange({ ...project, links: { ...project.links, primary: { label: project.links?.primary?.label ?? '', url: project.links?.primary?.url ?? '', [field]: value } } })
-
   const setSecondary = (field: keyof ProjectLink, value: string) =>
     onChange({ ...project, links: { ...project.links, secondary: { label: project.links?.secondary?.label ?? '', url: project.links?.secondary?.url ?? '', [field]: value } } })
 
@@ -206,7 +331,8 @@ function ProjectEditor({ project, isOpen, onToggle, onChange, onDelete }: {
                   {project.tags.map((tag, i) => (
                     <span key={i} className="inline-flex items-center gap-1 pl-2.5 pr-1.5 py-0.5 bg-zinc-100 rounded-lg text-xs text-zinc-700">
                       {tag}
-                      <button type="button" onClick={() => onChange({ ...project, tags: project.tags.filter((_, j) => j !== i) })}
+                      <button type="button"
+                        onClick={() => onChange({ ...project, tags: project.tags.filter((_, j) => j !== i) })}
                         className="text-zinc-400 hover:text-red-400 transition-colors">×</button>
                     </span>
                   ))}
@@ -237,7 +363,7 @@ function ProjectEditor({ project, isOpen, onToggle, onChange, onDelete }: {
             </div>
           </div>
 
-          {/* ── Images ───────────────────────────────────────────────────── */}
+          {/* ── Images ─────────────────────────────────────────────────────── */}
           <div className="pt-1 border-t border-black/[0.05] space-y-5">
 
             {/* Header image */}
@@ -256,16 +382,14 @@ function ProjectEditor({ project, isOpen, onToggle, onChange, onDelete }: {
               <Label>Gallery</Label>
               <div className="space-y-3">
                 {gallery.map((img, i) => (
-                  <div key={i} className="p-3 bg-zinc-50 rounded-xl border border-black/[0.05] space-y-2">
+                  <div key={i} className="p-3 bg-zinc-50 rounded-xl border border-black/[0.05]">
                     <div className="flex gap-3">
-                      {/* Thumbnail */}
                       {img.src && (
                         <div className="w-20 h-14 rounded-lg overflow-hidden bg-zinc-200 shrink-0">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={img.src} alt="" className="object-cover w-full h-full" />
                         </div>
                       )}
-                      {/* Controls */}
                       <div className="flex-1 space-y-2 min-w-0">
                         <ImageUpload compact value={img.src}
                           onChange={src => {
@@ -278,7 +402,6 @@ function ProjectEditor({ project, isOpen, onToggle, onChange, onDelete }: {
                             onChange({ ...project, gallery: g })
                           }} />
                       </div>
-                      {/* Remove */}
                       <button type="button"
                         onClick={() => onChange({ ...project, gallery: gallery.filter((_, j) => j !== i) })}
                         className="text-zinc-300 hover:text-red-400 transition-colors shrink-0 self-start mt-1">
@@ -366,7 +489,6 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-zinc-50">
-      {/* Header */}
       <header className="bg-white border-b border-black/[0.06] sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-6 h-14 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -385,7 +507,6 @@ export default function AdminPage() {
         </div>
       </header>
 
-      {/* Body */}
       <main className="max-w-3xl mx-auto px-6 py-10">
         {loading ? (
           <p className="text-sm text-zinc-400 text-center py-20">Loading…</p>
